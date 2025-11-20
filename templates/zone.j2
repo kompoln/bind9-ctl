@@ -1,0 +1,14 @@
+$ORIGIN {{ origin }}
+$TTL {{ default_ttl }}
+@	IN	SOA	{{ soa.primary_ns }} {{ soa.admin_email }} (
+		{{ soa.serial }} ; Serial
+		{{ soa.refresh }} ; Refresh
+		{{ soa.retry }} ; Retry
+		{{ soa.expire }} ; Expire
+		{{ soa.minimum }} ; Minimum
+)
+
+{% for record in records -%}
+{{ record.owner }}	{{ record.ttl }}	IN	{{ record.type }}	{{ record.value }}
+{% endfor -%}
+
