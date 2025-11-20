@@ -62,7 +62,7 @@ install_system_packages() {
       ;;
     dnf|yum)
       packages=(python3 python3-pip bind-utils bind git)
-      update_cmd=("${manager}" -y check-update || true)
+      update_cmd=("${manager}" -y check-update)
       install_cmd=("${manager}" install -y "${packages[@]}")
       ;;
     zypper)
@@ -82,7 +82,11 @@ install_system_packages() {
   esac
 
   info "Installing system packages via ${manager}: ${packages[*]}"
-  "${update_cmd[@]}"
+  if [[ -n "${update_cmd[*]-}" ]]; then
+    if ! "${update_cmd[@]}"; then
+      warn "Package metadata refresh failed; continuing."
+    fi
+  fi
   "${install_cmd[@]}"
 }
 
