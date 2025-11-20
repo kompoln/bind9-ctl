@@ -12,6 +12,24 @@ Declarative tooling to plan and apply changes to BIND9 zones by comparing YAML-d
 - Pulls the live zone state to YAML or JSON snapshots for auditing.
 - Applies diffs via TSIG-authenticated dynamic updates (`APPLY_STRATEGY=dynamic`) or traditional zone reloads.
 
+## Installation (Linux)
+
+1. Clone this repository onto the target host.
+2. Run the installer (requires root to install packages and create `/usr/local/bin/bind9-ctl`):
+
+   ```bash
+   sudo scripts/install-linux.sh
+   ```
+
+   Environment variables:
+
+   - `INSTALL_PREFIX` (default `/opt/bind9-ctl`) – installation directory.
+   - `CLI_LINK` (default `/usr/local/bin/bind9-ctl`) – wrapper script path.
+   - `SKIP_SYSTEM_PACKAGES=1` – skip package installation if dependencies are preinstalled.
+   - `PYTHON_BIN` – override Python interpreter (default `python3`).
+
+3. Edit `/opt/bind9-ctl/.env` to point at your BIND server and credentials, then continue with the quick-start flow below.
+
 ## Quick start
 
 1. Copy `env.example` to `.env` and adjust values.\
